@@ -3,6 +3,7 @@ package br.cericatto.leo.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import br.cericatto.leo.R
 import br.cericatto.leo.model.api.ApiService
 import br.cericatto.leo.presenter.di.component.DaggerMainComponent
@@ -10,6 +11,7 @@ import br.cericatto.leo.presenter.di.module.MainModule
 import br.cericatto.leo.presenter.extensions.checkIfHasNetwork
 import br.cericatto.leo.presenter.extensions.showToast
 import br.cericatto.leo.presenter.impl.MainPresenterImpl
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -74,6 +76,12 @@ class MainActivity : BaseActivity() {
         if (checkIfHasNetwork()) {
             presenter.initRecyclerView()
             presenter.initDataSet(query)
-        } else showToast(R.string.no_internet)
+        } else {
+            id_activity_main__loading.visibility = View.GONE
+            id_activity_main__recycler_view.visibility = View.GONE
+            id_activity_main__default_text.visibility = View.VISIBLE
+
+            showToast(R.string.no_internet)
+        }
     }
 }

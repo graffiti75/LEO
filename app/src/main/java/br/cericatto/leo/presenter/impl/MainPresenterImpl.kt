@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.cericatto.leo.MainApplication
 import br.cericatto.leo.R
 import br.cericatto.leo.model.Repo
+import br.cericatto.leo.model.Search
 import br.cericatto.leo.model.api.ApiService
 import br.cericatto.leo.presenter.MainPresenter
 import br.cericatto.leo.view.activity.MainActivity
@@ -63,13 +64,7 @@ class MainPresenterImpl @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    val items = it?.items ?: emptyList()
-                    if (items.isNotEmpty()) {
-                        showData(items)
-                        Timber.i("getRepos() -> $items")
-                    } else {
-                        app.loadedAllData = true
-                    }
+                    loadDataOnSuccess(it, query)
                 },
                 {
                     it.message?.let { errorMessage ->
@@ -85,11 +80,6 @@ class MainPresenterImpl @Inject constructor(
     }
 
     override fun showData(repos: List<Repo>) {
-//        activity.apply {
-//            id_activity_main__loading.visibility = View.GONE
-//            id_activity_main__recycler_view.visibility = View.VISIBLE
-//        }
-//        mAdapter.updateAdapter(repos)
         activity.apply {
             id_activity_main__loading.visibility = View.GONE
             id_activity_main__recycler_view.visibility = View.VISIBLE
@@ -147,5 +137,27 @@ class MainPresenterImpl @Inject constructor(
                 return false
             }
         })
+    }
+
+    //--------------------------------------------------
+    // Private Methods
+    //--------------------------------------------------
+
+    private fun loadDataOnSuccess(search: Search?, query: String) {
+        val items = search?.items ?: emptyList()
+        if (items.isNotEmpty()) {
+            showData(items)
+            Timber.i("getRepos() -> $items")
+        } else {
+            activity.apply {
+                id_activity_main__loading.visibility = View.GONE
+                id_activity_main__default_text.visibility = View.VISIBLE
+
+                val text = getString(R.string.retrofit_empty_repos, query)
+                id_activity_main__default_text.text = text
+            }
+            val app: MainApplication = activity.application as MainApplication
+            app.loadedAllData = true
+        }
     }
 }

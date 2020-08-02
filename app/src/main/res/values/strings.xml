@@ -2,6 +2,7 @@
     <string name="app_name">LEO</string>
 
     <string name="activity_main_default_text">Choose some repo clicking into the search box at the Toolbar above</string>
+    <string name="retrofit_empty_repos">There are no repos for the keyword \'%1$s\'.</string>
 
     <!-- Errors -->
 
