@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import br.cericatto.leo.MainApplication
+import br.cericatto.leo.presenter.di.component.ApplicationComponent
 import kotlinx.android.synthetic.main.toolbar.*
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -15,12 +17,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract val contentView: Int
 
-//    var applicationComponent: ApplicationComponent? = null
+    var applicationComponent: ApplicationComponent? = null
 
     @CallSuper
     protected open fun onViewReady(savedInstanceState: Bundle?, intent: Intent) {
-//        applicationComponent = (application as MainApplication).applicationComponent
-//        resolveDaggerDependency()
+        applicationComponent = (application as MainApplication).applicationComponent
+        resolveDaggerDependency()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
