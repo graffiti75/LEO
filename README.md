@@ -54,3 +54,9 @@ Also, this app is using:
 - Timber
 - RecyclerView
 - CardView
+
+## Implementation Time
+
+According to [Wakatime](https://wakatime.com/dashboard), this project took 4 hrs 33 mins to be implemented.
+
+<img src="https://i.imgur.com/3QqETwT.png" width="1024" height="768" />
