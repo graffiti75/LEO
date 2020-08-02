@@ -59,6 +59,11 @@ class MainActivity : BaseActivity() {
         setCustomToolbar(false, getString(R.string.app_name))
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
+    }
+
     //--------------------------------------------------
     // Menu
     //--------------------------------------------------
@@ -75,11 +80,11 @@ class MainActivity : BaseActivity() {
     fun getData(query: String) {
         if (checkIfHasNetwork()) {
             presenter.initRecyclerView()
-            presenter.initDataSet(query)
+            presenter.getRepos(query)
         } else {
-            id_activity_main__loading.visibility = View.GONE
-            id_activity_main__recycler_view.visibility = View.GONE
-            id_activity_main__default_text.visibility = View.VISIBLE
+            activity_main__loading.visibility = View.GONE
+            activity_main__recycler_view.visibility = View.GONE
+            activity_main__default_text.visibility = View.VISIBLE
 
             showToast(R.string.no_internet)
         }

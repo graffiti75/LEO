@@ -10,8 +10,12 @@ import timber.log.Timber
 
 open class MainApplication : Application() {
     lateinit var applicationComponent: ApplicationComponent
-    var page: Int = 1
-    var loadedAllData: Boolean = false
+
+    companion object {
+        var page: Int = 0
+        var itemsLoaded: Int = 0
+        var itemsTotal: Int = 0
+    }
 
     override fun onCreate() {
         super.onCreate()

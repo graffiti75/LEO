@@ -7,16 +7,18 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import br.cericatto.leo.AppConfiguration
+import br.cericatto.leo.MainApplication
 import br.cericatto.leo.presenter.NavigationUtils
+import timber.log.Timber
 
-fun Context.showToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-}
-
-fun Context.showToast(message: Int) {
-    Toast.makeText(this, this.getString(message), Toast.LENGTH_LONG).show()
-}
+/**
+ * Network.
+ */
 
 @Suppress("DEPRECATION")
 fun Context.checkIfHasNetwork(): Boolean {
@@ -45,6 +47,34 @@ fun Context.checkIfHasNetwork(): Boolean {
         }
     }
     return result
+}
+
+/**
+ * Views.
+ */
+
+fun View.setVisible() {
+    visibility = View.VISIBLE
+}
+
+fun View.setInvisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.setGone() {
+    visibility = View.GONE
+}
+
+/**
+ * Context.
+ */
+
+fun Context.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+}
+
+fun Context.showToast(message: Int) {
+    Toast.makeText(this, this.getString(message), Toast.LENGTH_LONG).show()
 }
 
 fun Context.openActivity(activity: Activity, clazz: Class<*>) {
@@ -85,4 +115,36 @@ fun Context.getExtra(extras: Bundle, key: String, value: Any): Bundle {
         is Boolean -> extras.putBoolean(key, value)
     }
     return extras
+}
+
+/**
+ * Pagination.
+ */
+
+fun listAllLoaded() : Boolean {
+    val zero = (MainApplication.itemsLoaded == 0) && (MainApplication.itemsTotal == 0)
+    return if (zero) false
+    else (MainApplication.itemsLoaded >= MainApplication.itemsTotal)
+}
+
+fun debugPagination(position: Int, itemsLoaded: Int, pageLoaded: Boolean, allLoaded: Boolean) {
+    val tag = "leo"
+    tag.apply {
+        Log.i(this,"---------- position: $position")
+        Log.i(this,"---------- itemsLoaded: $itemsLoaded")
+        Log.i(this,"---------- pageLoaded: $pageLoaded")
+        Log.i(this,"---------- allLoaded: $allLoaded\n")
+        Log.i(this,"--------------------------------------------------")
+    }
+//    Timber.i("---------- position: $position")
+//    Timber.i("---------- itemsLoaded: $itemsLoaded")
+//    Timber.i("---------- pageLoaded: $pageLoaded")
+//    Timber.i("---------- allLoaded: $allLoaded\n")
+//    Timber.i("--------------------------------------------------")
+}
+
+fun RecyclerView.scrollPagination(page: Int) {
+    val position = AppConfiguration.ITEMS_PER_PAGE * page
+//    this.layoutManager!!.smoothScrollToPosition(this, RecyclerView.State(), position)
+    this.layoutManager!!.scrollToPosition(position - 5)
 }

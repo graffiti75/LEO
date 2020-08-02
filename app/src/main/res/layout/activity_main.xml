@@ -1,41 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        layout="@layout/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/id_activity_main__recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_repo" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
-            android:id="@+id/id_activity_main__loading"
-            layout="@layout/loading"
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/id_activity_main__default_text"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/activity_main_default_text"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:visibility="visible" />
-    </FrameLayout>
-</LinearLayout>
+            android:layout_height="match_parent">
+
+            <!-- Recycler View -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_main__recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_repo" />
+
+            <!-- Empty Recycler View Text -->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/activity_main__default_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="@string/activity_main_default_text"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <!-- Pagination Loading -->
+
+            <include
+                android:id="@+id/activity_main__pagination_loading"
+                layout="@layout/loading"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Main Loading -->
+
+    <include
+        android:id="@+id/activity_main__loading"
+        layout="@layout/loading_dark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+</FrameLayout>
