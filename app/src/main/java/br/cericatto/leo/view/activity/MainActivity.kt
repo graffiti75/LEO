@@ -3,15 +3,11 @@ package br.cericatto.leo.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import br.cericatto.leo.R
 import br.cericatto.leo.model.api.ApiService
 import br.cericatto.leo.presenter.di.component.DaggerMainComponent
 import br.cericatto.leo.presenter.di.module.MainModule
-import br.cericatto.leo.presenter.extensions.checkIfHasNetwork
-import br.cericatto.leo.presenter.extensions.showToast
 import br.cericatto.leo.presenter.impl.MainPresenterImpl
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -71,22 +67,5 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         presenter.onCreateOptionsMenu(menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    //--------------------------------------------------
-    // Methods
-    //--------------------------------------------------
-
-    fun getData(query: String) {
-        if (checkIfHasNetwork()) {
-            presenter.initRecyclerView()
-            presenter.getRepos(query)
-        } else {
-            activity_main__loading.visibility = View.GONE
-            activity_main__recycler_view.visibility = View.GONE
-            activity_main__default_text.visibility = View.VISIBLE
-
-            showToast(R.string.no_internet)
-        }
     }
 }

@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.cericatto.leo.MainApplication
 import br.cericatto.leo.R
 import br.cericatto.leo.model.Repo
-import br.cericatto.leo.presenter.extensions.debugPagination
-import br.cericatto.leo.presenter.extensions.listAllLoaded
+import br.cericatto.leo.presenter.extensions.*
 import br.cericatto.leo.view.activity.MainActivity
 import kotlinx.android.synthetic.main.item_repo.view.*
 
@@ -70,7 +69,15 @@ class RepoAdapter(
     }
 
     private fun setTitle(view: View, repo: Repo) {
-        view.id_item_repo__title_text_view.text = repo.full_name
+        view.apply {
+            val textView = id_item_repo__title_text_view
+            textView.text = repo.full_name
+            textView.setOnClickListener {
+                val context = it.context
+                activity.showToast(repo.toString())
+                initViewAnimation(view, context.anim(R.anim.zoom_in))
+            }
+        }
     }
 
     //--------------------------------------------------

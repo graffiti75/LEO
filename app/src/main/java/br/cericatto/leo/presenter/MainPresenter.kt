@@ -11,6 +11,7 @@ interface MainPresenter {
      * Data
      */
 
+    fun getData(query: String)
     fun initRecyclerView()
     fun getRepos(query: String)
     fun showData(repos: List<Repo>)

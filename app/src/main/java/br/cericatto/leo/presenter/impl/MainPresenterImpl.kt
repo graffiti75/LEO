@@ -2,7 +2,6 @@ package br.cericatto.leo.presenter.impl
 
 import android.app.SearchManager
 import android.content.Context
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
@@ -13,9 +12,7 @@ import br.cericatto.leo.model.Repo
 import br.cericatto.leo.model.Search
 import br.cericatto.leo.model.api.ApiService
 import br.cericatto.leo.presenter.MainPresenter
-import br.cericatto.leo.presenter.extensions.scrollPagination
-import br.cericatto.leo.presenter.extensions.setGone
-import br.cericatto.leo.presenter.extensions.setVisible
+import br.cericatto.leo.presenter.extensions.*
 import br.cericatto.leo.view.activity.MainActivity
 import br.cericatto.leo.view.adapter.RepoAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,6 +45,21 @@ class MainPresenterImpl @Inject constructor(
     /**
      * Data
      */
+
+    override fun getData(query: String) {
+        activity.apply {
+            if (checkIfHasNetwork()) {
+                presenter.initRecyclerView()
+                presenter.getRepos(query)
+            } else {
+                showLoading()
+                hideRecyclerView()
+                showEmptyRecyclerView()
+                showToast(R.string.no_internet)
+            }
+        }
+
+    }
 
     override fun initRecyclerView() {
         activity.apply {
@@ -186,23 +198,27 @@ class MainPresenterImpl @Inject constructor(
     private fun getReposOnSuccess(search: Search?, query: String) {
         val items = search?.items ?: emptyList()
         if (items.isNotEmpty()) {
-            val itemsLoaded = MainApplication.itemsLoaded
-            MainApplication.itemsLoaded = itemsLoaded + search!!.items.size
-            MainApplication.itemsTotal = search.total_count
-            Log.i("leo", "========== itemsTotal: ${search.total_count}")
-
+            updatePagination(search!!)
             hidePaginationLoading()
-
             showData(items)
-            Timber.i("getRepos() -> $items")
         } else {
             activity.apply {
                 hideLoading()
                 showEmptyRecyclerView()
-
-                val text = getString(R.string.retrofit_empty_repos, query)
-                activity_main__default_text.text = text
+                showEmptyRepoMessage(query)
             }
+        }
+    }
+
+    private fun updatePagination(search: Search) {
+        val itemsLoaded = MainApplication.itemsLoaded
+        MainApplication.itemsLoaded = itemsLoaded + search.items.size
+        MainApplication.itemsTotal = search.total_count
+    }
+
+    private fun showEmptyRepoMessage(query: String) {
+        activity.apply {
+            activity_main__default_text.text = getString(R.string.retrofit_empty_repos, query)
         }
     }
 
