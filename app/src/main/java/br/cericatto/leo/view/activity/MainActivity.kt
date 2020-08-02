@@ -1,7 +1,8 @@
-package br.cericatto.leo
+package br.cericatto.leo.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import br.cericatto.leo.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

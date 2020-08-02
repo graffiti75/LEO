@@ -1,12 +1,19 @@
 <resources>
     <string name="app_name">LEO</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- Errors -->
+
+    <string name="error_loading_user">Error loading User.</string>
+    <string name="empty_commits">This repository does not contains commits.</string>
+    <string name="no_internet">No network connection. Please try again later.</string>
+
+    <!-- Layout -->
+
+    <string name="item_commit__name_message__hint">Octopus Octocat</string>
+    <string name="item_commit__email_message__hint">octocat@macbook-pro.local</string>
+    <string name="item_commit__date_message__hint">2018-12-31T00:00:00Z</string>
+    <string name="item_commit__commit_message__hint">First commit.</string>
+
+    <string name="activity_login__password_hint">Please type your Github password</string>
+    <string name="activity_detail__authentication_error">Repository could not be loaded.</string>
 </resources>

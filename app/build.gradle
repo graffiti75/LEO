@@ -39,6 +39,7 @@ dependencies {
     // Support.
     implementation "androidx.core:core-ktx:$kotlin_core"
     implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.recyclerview:recyclerview:$androidx_version"
     implementation "androidx.cardview:cardview:$card_view_version"
     implementation "com.google.android.material:material:$material_version"
