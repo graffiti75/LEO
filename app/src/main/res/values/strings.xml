@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">LEO</string>
 
+    <string name="activity_main_default_text">Choose some repo clicking into the search box at the Toolbar above</string>
+
     <!-- Errors -->
 
     <string name="error_loading_user">Error loading User.</string>
@@ -16,4 +18,9 @@
 
     <string name="activity_login__password_hint">Please type your Github password</string>
     <string name="activity_detail__authentication_error">Repository could not be loaded.</string>
+
+    <!-- Menu -->
+
+    <string name="search">Search</string>
+    <string name="search_hint">Type repo name</string>
 </resources>

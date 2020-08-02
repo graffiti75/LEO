@@ -27,6 +27,15 @@
             layout="@layout/loading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/id_activity_main__default_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/activity_main_default_text"
+            android:textSize="24sp"
+            android:gravity="center"
             android:visibility="visible" />
     </FrameLayout>
 </LinearLayout>

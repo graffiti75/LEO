@@ -2,6 +2,7 @@ package br.cericatto.leo.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import br.cericatto.leo.R
 import br.cericatto.leo.model.api.ApiService
 import br.cericatto.leo.presenter.di.component.DaggerMainComponent
@@ -54,20 +55,25 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCustomToolbar(false, getString(R.string.app_name))
-        getData()
+    }
+
+    //--------------------------------------------------
+    // Menu
+    //--------------------------------------------------
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        presenter.onCreateOptionsMenu(menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     //--------------------------------------------------
     // Methods
     //--------------------------------------------------
 
-    private fun getData() {
+    fun getData(query: String) {
         if (checkIfHasNetwork()) {
             presenter.initRecyclerView()
-            presenter.initDataSet()
-        } else {
-            showToast(R.string.no_internet)
-            finish()
-        }
+            presenter.initDataSet(query)
+        } else showToast(R.string.no_internet)
     }
 }
