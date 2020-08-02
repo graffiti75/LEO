@@ -6,6 +6,9 @@ import br.cericatto.leo.R
 import br.cericatto.leo.model.api.ApiService
 import br.cericatto.leo.presenter.di.component.DaggerMainComponent
 import br.cericatto.leo.presenter.di.module.MainModule
+import br.cericatto.leo.presenter.extensions.checkIfHasNetwork
+import br.cericatto.leo.presenter.extensions.showToast
+import br.cericatto.leo.presenter.impl.MainPresenterImpl
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -15,7 +18,10 @@ class MainActivity : BaseActivity() {
     //--------------------------------------------------
 
     @Inject
-    lateinit var mApiService: ApiService
+    lateinit var presenter: MainPresenterImpl
+
+    @Inject
+    lateinit var apiService: ApiService
 
     //--------------------------------------------------
     // Base Activity
@@ -48,5 +54,20 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCustomToolbar(false, getString(R.string.app_name))
+        getData()
+    }
+
+    //--------------------------------------------------
+    // Methods
+    //--------------------------------------------------
+
+    private fun getData() {
+        if (checkIfHasNetwork()) {
+            presenter.initRecyclerView()
+            presenter.initDataSet()
+        } else {
+            showToast(R.string.no_internet)
+            finish()
+        }
     }
 }

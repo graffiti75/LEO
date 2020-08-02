@@ -8,15 +8,17 @@ import br.cericatto.leo.MainApplication
 import br.cericatto.leo.R
 import br.cericatto.leo.model.Repo
 import br.cericatto.leo.view.activity.MainActivity
+import kotlinx.android.synthetic.main.item_repo.view.*
 import timber.log.Timber
 
-class RepoAdapter(activity: MainActivity) : RecyclerView.Adapter<RepoAdapter.RepoViewHolder>() {
+class RepoAdapter(
+    private val activity: MainActivity
+) : RecyclerView.Adapter<RepoAdapter.RepoViewHolder>() {
 
     //--------------------------------------------------
     // Attributes
     //--------------------------------------------------
 
-    private val mActivity = activity
     private var mRepoList: MutableList<Repo> = ArrayList()
 
     //--------------------------------------------------
@@ -29,8 +31,9 @@ class RepoAdapter(activity: MainActivity) : RecyclerView.Adapter<RepoAdapter.Rep
     }
 
     override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
-        var repo = mRepoList[position]
-        var view = holder.itemView
+        val repo = mRepoList[position]
+        val view = holder.itemView
+        setTitle(view, repo)
         checkPagination(position)
     }
 
@@ -40,7 +43,7 @@ class RepoAdapter(activity: MainActivity) : RecyclerView.Adapter<RepoAdapter.Rep
     // Callback
     //--------------------------------------------------
 
-    fun updateAdapter(list: MutableList<Repo>) {
+    fun updateAdapter(list: List<Repo>) {
         val newList = mRepoList
         newList.addAll(list)
         mRepoList = newList
@@ -55,12 +58,20 @@ class RepoAdapter(activity: MainActivity) : RecyclerView.Adapter<RepoAdapter.Rep
         val shouldPaginate : Boolean = position == (mRepoList.size - 1)
         Timber.d("position: $position, itemCount - 1: ${mRepoList.size - 1}, shouldPaginate: $shouldPaginate")
 
-        val app: MainApplication = mActivity.application as MainApplication
+        val app: MainApplication = activity.application as MainApplication
         val loadedAllData = app.loadedAllData
         val page = app.page
         if (!loadedAllData && shouldPaginate) {
             app.page = page + 1
             Timber.d("page: $page")
+            activity.presenter.initDataSet()
+        }
+    }
+
+    private fun setTitle(view: View, repo: Repo) {
+        view.apply {
+            id_item_repo__title_text_view.text = repo.name
+            id_item_repo__title_text_view.setOnClickListener {}
         }
     }
 

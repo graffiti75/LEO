@@ -1,15 +1,14 @@
 package br.cericatto.leo.model.api
 
-import br.cericatto.leo.model.Repo
+import br.cericatto.leo.model.Search
 import io.reactivex.Observable
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("/user/repos")
-    fun getRepos(
-        @Header("Authorization") authorization: String,
-        @Query("page") page: Int
-    ): Observable<MutableList<Repo>>
+    @GET("/search/repositories")
+    fun getRepos(@Query("q") query: String = "android",
+         @Query("per_page") perPage: Int = 30,
+         @Query("page") page: Int = 1
+    ): Observable<Search>
 }
